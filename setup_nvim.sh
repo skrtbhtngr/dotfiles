@@ -1,51 +1,41 @@
 #!/bin/bash
 
-mkdir -p "$HOME/.config/nvim"
+NVIM_CONFIG_DIR="$HOME/.config/nvim"
 
-ln -s "$HOME/.dotfiles/init.vim" "$HOME/.config/nvim/init.vim"
-ln -s "$HOME/.dotfiles/c.vim" "$HOME/.config/nvim/syntax/c.vim"
+mkdir -p "${NVIM_CONFIG_DIR}/syntax"
+mkdir "${NVIM_CONFIG_DIR}/ftplugin"
 
-cd "$HOME/.config/nvim/"
+ln -s "$HOME/.dotfiles/init.vim" "${NVIM_CONFIG_DIR}/init.vim"
+ln -s "$HOME/.dotfiles/c_syntax.vim" "${NVIM_CONFIG_DIR}/syntax/c.vim"
+ln -s "$HOME/.dotfiles/c_ftplugin.vim" "${NVIM_CONFIG_DIR}/ftplugin/c.vim"
 
-echo -e "Installing onedark...\n"
-git clone https://github.com/joshdick/onedark.vim "$HOME/.config/nvim/onedark.vim"
-cd onedark.vim
-cp -r autoload colors ../
+# yarn installation needs a repo to be added; default apt repo soes not work as of now!
+PLUGINS="
+onedark     https://github.com/joshdick/onedark.vim     {autoload,colors}
+lightline   https://github.com/itchyny/lightline.vim    {autoload,doc,plugin}
+auto-pairs  https://github.com/jiangmiao/auto-pairs     plugin
+mkdx        https://github.com/SidOfc/mkdx              {autoload,after,doc,ftplugin}
+gitgutter   https://github.com/airblade/vim-gitgutter   {autoload,doc,plugin}
+cscope      https://github.com/vim-scripts/cscope.vim   {doc,plugin}
+nerdtree    https://github.com/preservim/nerdtree       {autoload,doc,lib,nerdtree_plugin,plugin}
+coc         https://github.com/neoclide/coc.nvim.git    {autoload,bin,build,data,doc,lua,node_modules,plugin}
+fugitive    https://github.com/tpope/vim-fugitive.git   {autoload,doc,ftdetect,ftplugin,plugin,syntax}
+"
+readarray -t <<< $PLUGINS
 
-cd ../
-echo -e "\nInstalling lightline...\n"
-git clone https://github.com/itchyny/lightline.vim "$HOME/.config/nvim/lightline"
-cd lightline
-cp -r autoload doc plugin ../
-
-cd ../
-echo -e "\nInstalling auto-pairs...\n"
-git clone https://github.com/jiangmiao/auto-pairs "$HOME/.config/nvim/auto-pairs"
-cd auto-pairs
-cp -r plugin ../
-
-cd ../
-echo -e "\nInstalling mkdx...\n"
-git clone https://github.com/SidOfc/mkdx "$HOME/.config/nvim/mkdx"
-cd mkdx
-cp -r autoload after doc ftplugin ../
-
-cd ../
-echo -e "\nInstalling gitgutter...\n"
-git clone https://github.com/airblade/vim-gitgutter "$HOME/.config/nvim/gitgutter"
-cd gitgutter
-cp -r autoload doc plugin ../
-
-cd ../
-echo -e "\nInstalling cscope...\n"
-git clone https://github.com/vim-scripts/cscope.vim "$HOME/.config/nvim/cscope.vim"
-cd cscope.vim
-cp -r doc plugin ../
-
-cd ../
-echo -e "\nInstalling nerdtree...\n"
-git clone https://github.com/preservim/nerdtree "$HOME/.config/nvim/nerdtree"
-cd nerdtree
-cp -r autoload doc lib nerdtree_plugin syntax ../
+for (( pl = 1; pl < ${#MAPFILE[@]} - 1; pl++ ))
+do
+    PLD=(${MAPFILE[$pl]})
+    PDIR=${NVIM_CONFIG_DIR}/${PLD[0]}
+    echo -e "Installing ${PLD[0]}..."
+    git -C ${PDIR} pull --rebase || git clone ${PLD[1]} ${PDIR}
+    if [[ $? != 0 ]]; then
+        exit -1
+    fi
+    if [[ ${PLD[0]} == "coc" ]]; then
+        (cd ${PDIR}; yarn install)
+    fi
+    eval "cp -rf ${PDIR}/${PLD[2]} ${NVIM_CONFIG_DIR}/"
+done
 
 echo -e "\nDone!"

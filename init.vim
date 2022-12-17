@@ -14,49 +14,42 @@ if (empty($TMUX))
   endif
 endif
 
-filetype plugin indent on   "Filetype-specific auto-indenting
+filetype plugin on          "Filetype-specific auto-indenting
 
 syntax on                   "Syntax highlighting
 
 colorscheme onedark         "Enable onedark theme
 
-let g:lightline = { 'colorscheme': 'one' }
+let g:lightline = {
+	\ 'colorscheme': 'one',
+	\ 'active': {
+	\	'left': [['mode', 'paste'], ['gitbranch', 'readonly', 'absolutepath', 'modified']],
+    \   'right': [['lineinfo'], ['filetype']]
+	\ },
+	\ 'component': {
+	\	'gitbranch': '(%{FugitiveHead()})'
+	\ },
+    \ }
+
+let g:coc_disable_startup_warning = 1
 
 set t_Co=256                "Display 256 colors (usually the default setting)
-
 set wildmenu                "Better command-line completion
-
 set autoindent              "Keep the same indent as the line you're currently on
-
 set guicursor=              "Prevent block cursor from turning into i-beam in insert mode
-
 set ruler                   "Display the cursor position on the last line of the screen or in the status line of a window
-                            "(in case you disable vim-airline)
 set cursorline              "Enable cursor line
-
 set number                  "Display line numbers on the left
-
 set tabstop=4               "Tells how many cols a tab counts for. Affects how the existing text displays.
-
-set softtabstop=4           "Sets how many cols vim uses when you use Tab in insert mode; also deletes whole Tab space when backspace is pressed on it
-
+set softtabstop=4           "Sets how many cols vim uses when you use Tab in insert mode; backspace deletes whole Tab space
 set laststatus=2            "Always show the status line
-
 set shiftwidth=4            "Shift 4 places when indenting
-
 set expandtab               "Translate tabs to spaces!!
-
 set backspace=indent,eol,start  "Allow backspacing over autoindent, line breaks and start of insert action
-
 set hlsearch                "Highlight the search term matches, if found
-                            ":nohlsearch to clear the highlights
-
 set incsearch               "Start searching as soon as a character is entered, refine search on every change in search string
-
 set autoread                "Re-read the file if changed from another program
-
 set updatetime=100          "Rate at which swap file is updated
-
 set noerrorbells            "Supress annoying noise
 set novisualbell
 
@@ -67,25 +60,24 @@ nmap <F2> :retab<CR>
 set pastetoggle=<F3>
 
 "Use F4 to toggle line numbers
-nmap <F4> :set invnumber<CR>
+nmap <F4> :set invnumber<CR> :GitGutterToggle<CR>
 
 "Set paths to search on for tags file
 set tags=./tags,tags;$HOME
 
 "Code folding
 nnoremap F zfa}<CR>
+set viewoptions=folds,cursor
+set sessionoptions=folds
 
 "Save and load folds acroos file open/close
 augroup persist_folds
   autocmd!
-  autocmd BufWinLeave * mkview
-  autocmd BufWinEnter * silent! loadview
+  autocmd BufWinLeave ?* mkview
+  autocmd BufWinEnter ?* silent! loadview
 augroup END
 
 let g:AutoPairs = {'(':')', '[':']', '{':'}', '```':'```', '"""':'"""', "'''":"'''"}
-
-"Enable nerdtree
-"autocmd vimenter * NERDTree | wincmd w
 
 "Set nerdtree window size
 let g:NERDTreeWinSize = 15
@@ -93,9 +85,7 @@ let g:NERDTreeWinSize = 15
 "Automatically close nerdtree on quit
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-
 nnoremap <C-e> :NERDTreeToggle<CR>
-"nnoremap <C-f> :NERDTreeFind<CR>
 
 if has("cscope")
         " Look for a 'cscope.out' file starting from the current directory,
@@ -146,14 +136,11 @@ endif
 
 nnoremap <F5> :cprev<CR>
 nnoremap <F6> :cnext<CR>
-"nnoremap <F9> :copen<CR>
-"nnoremap <S-F9> :cprev<CR>
 
-nnoremap <F9> :call QuickfixToggle()<cr>
+nnoremap <F9> :call QuickfixToggle()<CR>
 
 "https://learnvimscriptthehardway.stevelosh.com/chapters/38.html
 let g:quickfix_is_open = 0
-
 function! QuickfixToggle()
     if g:quickfix_is_open
         cclose
@@ -165,3 +152,8 @@ function! QuickfixToggle()
         let g:quickfix_is_open = 1
     endif
 endfunction
+
+set clipboard=unnamedplus
+
+set exrc
+set secure

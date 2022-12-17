@@ -22,7 +22,7 @@
 [diff]
     renames = true
     tool = vimdiff
-    algorithm = patience
+    algorithm = histogram
 
 [credential]
     helper = store
