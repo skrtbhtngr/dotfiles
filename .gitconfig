@@ -46,3 +46,6 @@
 
 [http]
     sslverify = false
+
+[alias]
+    cp = cherry-pick

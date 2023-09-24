@@ -1,30 +1,37 @@
 #!/bin/bash
 
+#TODO: verify this config
+
+VIM_PLUGIN_DIR="~/.vim/pack/plugins/start"
+mkdir -p VIM_PLUGIN_DIR
+
 ln -s ~/.dotfiles/.vimrc ~/.vimrc
 
-echo -e "Installing vim-pathogen...\n"
-mkdir -p ~/.vim/autoload ~/.vim/bundle && \
-curl -Lo ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
+PLUGINS="
+vim-airline https://github.com/vim-airline/vim-airline
+vim-airline-themes  https://github.com/vim-airline/vim-airline-themes
+tagbar      https://github.com/preservim/tagbar
+auto-pairs  https://github.com/jiangmiao/auto-pairs
+gitgutter   https://github.com/airblade/vim-gitgutter
+cscope      https://github.com/vim-scripts/cscope.vim
+coc         https://github.com/neoclide/coc.nvim
+fugitive    https://github.com/tpope/vim-fugitive
+nerdtree    https://github.com/preservim/nerdtree
+"
+readarray -t <<< $PLUGINS
 
-echo -e "\nInstalling vim-airline...\n"
-git clone https://github.com/vim-airline/vim-airline ~/.vim/bundle/vim-airline
-
-echo -e "\nInstalling vim-airline-themes...\n"
-git clone https://github.com/vim-airline/vim-airline-themes ~/.vim/bundle/vim-airline-themes
-
-echo -e "\nInstalling auto-pairs...\n"
-git clone https://github.com/jiangmiao/auto-pairs ~/.vim/bundle/auto-pairs
-
-echo -e "\nInstalling Tagbar...\n"
-git clone https://github.com/majutsushi/tagbar ~/.vim/bundle/tagbar
-
-echo -e "\nInstalling vim-operator-user...\n"
-git clone https://github.com/kana/vim-operator-user ~/.vim/bundle/vim-operator-user
-
-echo -e "\nInstalling vim-clang-format...\n"
-git clone https://github.com/rhysd/vim-clang-format ~/.vim/bundle/vim-clang-format
-
-echo -e "\nInstalling vim-gitgutter...\n"
-git clone https://github.com/airblade/vim-gitgutter ~/.vim/bundle/vim-gitgutter
+for (( pl = 1; pl < ${#MAPFILE[@]} - 1; pl++ ))
+do
+    PLD=(${MAPFILE[$pl]})
+    PDIR=${NVIM_PLUGIN_DIR}/${PLD[0]}
+    echo -e "Installing ${PLD[0]}..."
+    git -C ${PDIR} pull --rebase 2> /dev/null || git clone ${PLD[1]} ${PDIR}
+    if [[ $? != 0 ]]; then
+        exit -1
+    fi
+    if [[ ${PLD[0]} == "coc" ]]; then
+        (cd ${PDIR}; yarn install)
+    fi
+done
 
 echo -e "\nDone!"
