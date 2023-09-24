@@ -3,23 +3,28 @@
 This repo contains a bunch of config files that help set up a familiar environment for applications such as [n]vim, bash, git, etc.
 
 Vim:
-* [vim-pathogen](https://github.com/tpope/vim-pathogen)
 * [vim-airline](https://github.com/vim-airline/vim-airline)
 * [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
-* [auto-pairs](https://github.com/jiangmiao/auto-pairs)
 * [tagbar](https://github.com/majutsushi/tagbar)
-* [vim-operator-user](https://github.com/kana/vim-operator-user)
-* [vim-clang-format](https://github.com/rhysd/vim-clang-format)
+* [auto-pairs](https://github.com/jiangmiao/auto-pairs)
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
+* [cscope.vim](https://github.com/vim-scripts/cscope.vim)
+* [coc](https://github.com/neoclide/coc.nvim)
+* [fugitive](https://github.com/tpope/vim-fugitive)
+* [nerdtree](https://github.com/preservim/nerdtree)
 
 NeoVim:
 * [onedark.vim](https://github.com/joshdick/onedark.vim)
 * [lightline.vim](https://github.com/itchyny/lightline.vim)
 * [auto-pairs](https://github.com/jiangmiao/auto-pairs)
-* [mkdx](https://github.com/SidOfc/mkdx)
 * [vim-gitgutter](https://github.com/airblade/vim-gitgutter)
 * [cscope.vim](https://github.com/vim-scripts/cscope.vim)
+* [coc](https://github.com/neoclide/coc.nvim)
+* [fugitive](https://github.com/tpope/vim-fugitive)
 * [nerdtree](https://github.com/preservim/nerdtree)
+* [tagbar](https://github.com/preservim/tagbar)
+* [vim-bookmarks](https://github.com/MattesGroeger/vim-bookmarks)
+* [lightline-bufferline](https://github.com/mengelbrecht/lightline-bufferline)
 
 To use the configs:
 
@@ -28,7 +33,7 @@ Install `vim`/`nvim`, `git`, `curl`, `ctags`, `cscope` and `htop` if not already
 Quick setup:
 
 ```
-git clone https://github.com/skrtbhtngr/dotfiles.git ~/.dotfiles
+git clone git@github.com:skrtbhtngr/dotfiles.git ~/.dotfiles
 chmod +x ~/.dotfiles/setup_nvim.sh
 ~/.dotfiles/setup_nvim.sh
 chmod +x ~/.dotfiles/setup_others.sh
