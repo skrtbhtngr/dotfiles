@@ -81,3 +81,5 @@ let g:clang_format#style_options = {
             \ "SpaceAfterCStyleCast" : "true",
             \ "SpaceBeforeParens" : "Never",
             \ "BreakBeforeBraces" : "Allman" }
+
+let g:AutoPairs = {'(':')', '[':']', '{':'}', '```':'```', '"""':'"""', "'''":"'''"}
