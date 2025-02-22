@@ -206,3 +206,6 @@ set clipboard=unnamedplus
 
 set exrc
 set secure
+
+let c_gnu = 1
+let c_functions=1

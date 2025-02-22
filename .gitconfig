@@ -49,3 +49,6 @@
 
 [alias]
     cp = cherry-pick
+
+[commit]
+    verbose = true

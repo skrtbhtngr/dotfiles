@@ -35,8 +35,8 @@ alias gl='git log --oneline'
 alias tagit='ctags -R -f ./tags .'
 
 alias ..='cd ..'
-alias ...='cd ..; cd ..'
-alias ....='cd ..; cd ..; cd ..'
+alias ...='cd .. && cd ..'
+alias ....='cd .. && cd .. && cd ..'
 alias la='ls -Alt'
 
 alias python='python3'
@@ -47,6 +47,6 @@ EXA_COLORS="uw=38;5;148:gw=38;5;148:tw=38;5;148:da=38;5;45"
 
 alias diff='sdiff -s'
 alias time='/usr/bin/time -f "\n$(tput bold && tput setaf 6)%E real, %U user, %S sys, %x exit$(tput sgr0)"'
-alias grep='grep --exclude="tags" --exclude="ctags" --exclude="cscope.*" --color=auto'
+alias grep='grep --exclude="tags" --exclude="ctags" --exclude="cscope.*" --exclude="*.cmd" --exclude-dir=".git" --color=auto'
 alias bat='batcat --pager=less'
 bind 'set show-all-if-ambiguous on'
