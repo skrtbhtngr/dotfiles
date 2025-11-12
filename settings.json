@@ -1,0 +1,77 @@
+{
+	"lsp": {
+		"clangd": {
+			"binary": {
+				//"arguments": [""]
+			}
+		}
+	},
+	"git": {
+		"blame": {
+			"show_avatar": false
+		},
+		"inline_blame": {
+			"padding": 20,
+			"show_commit_summary": false
+		}
+	},
+	"buffer_line_height": {
+		"custom": 1.4
+	},
+	"buffer_font_family": ".ZedMono",
+	"theme": "One Dark Pro",
+	"prettier": {
+		"allowed": true
+	},
+	"preferred_line_length": 100,
+	"toolbar": {
+		"quick_actions": false,
+		"breadcrumbs": false
+	},
+	"minimap": {
+		"max_width_columns": 80,
+		"show": "auto"
+	},
+	"gutter": {
+		"min_line_number_digits": 3,
+		"breakpoints": false,
+		"runnables": false
+	},
+	"relative_line_numbers": false,
+	"current_line_highlight": "all",
+	"cursor_shape": "block",
+	"agent_ui_font_size": 12.0,
+	"ui_font_size": 13.0,
+	"show_whitespaces": "trailing",
+	"hard_tabs": true,
+	"tab_size": 8,
+	"buffer_font_size": 10.0,
+	"disable_ai": true,
+	"theme_overrides": {
+		"One Dark Pro": {
+			"syntax": {
+				"comment": {
+					"font_style": "italic"
+				},
+				"comment.doc": {
+					"font_style": "italic"
+				},
+				"variable": {
+					"color": "#acb2beff",
+					"font_style": null,
+					"font_weight": null
+				},
+				"property": {
+					"color": "#acb2beff",
+					"font_style": null,
+					"font_weight": null
+				},
+				"function": {
+					"color": "#d05a51",
+					"font_style": null,
+					"font_weight": 500
+				}
+			}
+		}
+	}
+}
