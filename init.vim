@@ -41,11 +41,10 @@ let g:lightline = {
 	\ },
     \ }
 
+let g:ale_enabled = 0
+let g:coc_start_at_startup = 0
 let g:coc_disable_startup_warning = 1
-let g:gitgutter_sign_allow_clobber = 0
-let g:bookmark_highlight_lines = 1
-let g:bookmark_sign = ''
-highlight BookmarkLine gui=none guibg=#383838 guifg=none
+let b:coc_diagnostic_disable = 1
 
 if !has('gui_running')
   set t_Co=256              "Display 256 colors (usually the default setting) 
@@ -109,6 +108,7 @@ nnoremap <C-e> :NERDTreeToggle<CR>
 
 ":ls doesn't need one
 nnoremap <C-n> :bn<CR>
+nnoremap <C-p> :bp<CR>
 nnoremap <C-d> :bd<CR>
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
@@ -116,52 +116,6 @@ nnoremap <C-d> :bd<CR>
 inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-if has("cscope")
-        " Look for a 'cscope.out' file starting from the current directory,
-        " going up to the root directory.
-        let s:dirs = split(getcwd(), "/")
-        while s:dirs != []
-                let s:path = "/" . join(s:dirs, "/")
-                if (filereadable(s:path . "/cscope.out"))
-                        execute "cs add " . s:path . "/cscope.out " . s:path . " -v"
-                        break
-                endif
-                let s:dirs = s:dirs[:-2]
-        endwhile
-
-        set csto=0	" Use cscope first, then ctags
-        set cst		" Only search cscope
-        set csverb	" Make cs verbose
-
-        " s: Find this C symbol
-        nmap <C-f>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-        " g: Find this definition
-        nmap <C-g> :cs find g <C-R>=expand("<cword>")<CR><CR>
-        " c: Find functions calling this function
-        nmap <C-c> :cs find c <C-R>=expand("<cword>")<CR><CR>
-        " t: Find this text string
-        nmap <C-f>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-        " e: Find this egrep pattern
-        nmap <C-f>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-        " f: Find this file
-        nmap <C-f>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-        " i: Find files #including this file
-        nmap <C-f>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-        " d: Find functions called by this function
-        nmap <C-f>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-
-        nmap <C-Space>s :vert scs find s <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space>g :vert scs find g <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space>c :vert scs find c <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space>t :vert scs find t <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space>e :vert scs find e <C-R>=expand("<cword>")<CR><CR>
-        nmap <C-Space>f :vert scs find f <C-R>=expand("<cfile>")<CR><CR>
-        nmap <C-Space>i :vert scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-        nmap <C-Space>d :vert scs find d <C-R>=expand("<cword>")<CR><CR>
-
-        " Open a quickfix window for the following queries.
-        set cscopequickfix=s-,c-,d-,i-,t-,e-,g-
-endif
 nnoremap <F5> :cprev<CR>
 nnoremap <F6> :cnext<CR>
 
@@ -206,6 +160,13 @@ set clipboard=unnamedplus
 
 set exrc
 set secure
+set mouse=
 
 let c_gnu = 1
 let c_functions=1
+
+" Don't bother with onedark color overrides.
+" Set colors common to all filetypes here:
+hi Normal guibg=#1c1f24 ctermbg=NONE
+hi CursorLine guibg=#282c34 ctermbg=NONE
+hi Comment ctermfg=59 guifg=#6c737e

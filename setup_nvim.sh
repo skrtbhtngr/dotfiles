@@ -39,6 +39,7 @@ do
         exit -1
     fi
     if [[ ${PLD[0]} == "coc" ]]; then
+        # nodejs and nvim version constraints
         (cd ${PDIR}; yarn install)
     fi
 done

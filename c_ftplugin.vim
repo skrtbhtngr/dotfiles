@@ -1,5 +1,5 @@
 set colorcolumn=101
-highlight ColorColumn ctermbg=Black ctermfg=DarkRed
+highlight ColorColumn ctermbg=None guibg=#24282f
 
 " Highlight trailing spaces
 " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
@@ -14,4 +14,3 @@ set tabstop=8
 set shiftwidth=8
 set softtabstop=8
 set noexpandtab
-

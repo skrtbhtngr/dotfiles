@@ -266,6 +266,9 @@ if exists("c_gnu")
   syn keyword	cType	dev_t atomic_t atomic64_t rcuref_t
   syn keyword	cType	pid_t timer_t bool uid_t gid_t uid16_t gid16_t
   syn keyword	cType	uintptr_t intptr_t irqreturn_t
+  syn keyword	cType	pte_t pmd_t pud_t p4d_t pgprot_t pgtable_t
+  syn keyword	cType	pteval_t pmdval_t pudval_t p4dval_t pgdval_t pgprotval_t
+  syn keyword	cType	gfn_t gva_t gpa_t hva_t hpa_t hfn_t kvm_pnf_t
   syn keyword	cStorageClass	asmlinkage __kernel __user __iomem __percpu __rcu
   syn keyword	cStorageClass	fallthrough __aligned __cleanup __packed __weak __section
   syn keyword	cStorageClass	__always_unused __maybe_unused __used __always_used
