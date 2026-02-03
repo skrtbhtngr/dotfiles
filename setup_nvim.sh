@@ -15,17 +15,16 @@ ln -s "$HOME/.dotfiles/c_ftplugin.vim" "$NVIM_CONFIG_DIR/ftplugin/c.vim"
 # need nodejs and yarn packages
 # yarn installation needs a repo to be added; default apt repo does not work as of now!
 PLUGINS="
-onedark     https://github.com/joshdick/onedark.vim
-lightline   https://github.com/itchyny/lightline.vim
-auto-pairs  https://github.com/jiangmiao/auto-pairs
-gitgutter   https://github.com/airblade/vim-gitgutter
-cscope      https://github.com/vim-scripts/cscope.vim
-coc         https://github.com/neoclide/coc.nvim
-fugitive    https://github.com/tpope/vim-fugitive
-nerdtree    https://github.com/preservim/nerdtree
-tagbar      https://github.com/preservim/tagbar
-vim-bookmarks   https://github.com/MattesGroeger/vim-bookmarks
+onedark                 https://github.com/joshdick/onedark.vim
+lightline               https://github.com/itchyny/lightline.vim
+auto-pairs              https://github.com/jiangmiao/auto-pairs
+gitgutter               https://github.com/airblade/vim-gitgutter
+fugitive                https://github.com/tpope/vim-fugitive
+nerdtree                https://github.com/preservim/nerdtree
+tagbar                  https://github.com/preservim/tagbar
+vim-bookmarks           https://github.com/MattesGroeger/vim-bookmarks
 lightline-bufferline    https://github.com/mengelbrecht/lightline-bufferline
+nvim-lspconfig          https://github.com/neovim/nvim-lspconfig.git
 "
 readarray -t <<< $PLUGINS
 
@@ -37,10 +36,6 @@ do
     git -C ${PDIR} pull --rebase || git clone ${PLD[1]} ${PDIR}
     if [[ $? != 0 ]]; then
         exit -1
-    fi
-    if [[ ${PLD[0]} == "coc" ]]; then
-        # nodejs and nvim version constraints
-        (cd ${PDIR}; yarn install)
     fi
 done
 
