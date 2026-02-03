@@ -1,5 +1,5 @@
 set colorcolumn=101
-highlight ColorColumn ctermbg=None guibg=#24282f
+highlight ColorColumn ctermbg=None guibg=#1a1a1a
 
 " Highlight trailing spaces
 " http://vim.wikia.com/wiki/Highlight_unwanted_spaces
